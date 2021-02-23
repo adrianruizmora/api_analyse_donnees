@@ -19,21 +19,19 @@ def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates
 def get_latest_by_country(countryName, jsonFile='estimates.json'):
     years, emissions = list(), str()
 
+    try:
+        countryName.lower()
+    except:
+        return None
+
     with open(jsonFile, 'r') as f:
         info_dict = json.load(f)
         for info in info_dict:
             if info["Region/Country/Area"].lower() == countryName.lower() and 'thousand' in info['Series']:
                 years.append(info['Year'])
-                emissions = info['Value']
+                emissions = round(float(info['Value']),3)
+                emissions = str(emissions)
     try:
-        return json.dumps({"country": countryName, "year": max(years), "emissions": emissions})
+        return json.dumps({"country": countryName.lower(), "year": max(years), "emissions": emissions})
     except:
         return None
-
-
-
-# def return_string(this_is_a_string):
-#     return this_is_a_string
-
-# def return_is_string(this_is_a_string):
-#     return isinstance(this_is_a_string, str)
