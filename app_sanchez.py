@@ -1,48 +1,75 @@
+import csv
 import json
-import logging
-from flask import Flask, abort
-app = Flask(__name__)
 
-logging.basicConfig(level=logging.DEBUG)
 
-"""
-Récupérer les infos du fichier :
-https://data.un.org/_Docs/SYB/CSV/SYB63_310_202009_Carbon%20Dioxide%20Emission%20Estimates.csv
-"""
+def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates.json'):
+    output = list()
 
-@app.route('/')
-def hello_world():
-    #utilisé pour tester si l'app fonctionne bien
-    return 'Hello, World!'
+    with open(filename_path_csv, 'r') as f:
+        next(f, None)
+        reader = csv.DictReader(f)
+        for records in reader:
+            records["id"] = records.pop("Region/Country/Area")
+            records["Region/Country/Area"] = records.pop("")
+            output.append(records)
 
-@app.route('/latest_by_country/<country>')
-def by_country(country):
-    #on veut la valeur la plus récente des emissions totales pour le pays demandé
-    logging.debug(f"Pays demandé : {country}")
-    if country.lower()=="albania":
-        return json.dumps({"country":"Albania","year":1975, "emissions":4338.3340})
-    else:
-        #erreur 404 si on demande un pays qui n'est pas connu
-        abort(404)
-
-@app.route('/average_by_year/<year>')
-def average_for_year(year):
-    #on cherche la moyenne des émissions totales au niveau mondial pour une année demandée
-    logging.debug(f"Année demandée : {year}")
-    if year=="1975":
-        return json.dumps({"year":"1975", "total":12333555.9})
-    else:
-        abort(404)
-
-@app.route('/per_capita/<country>')
-def per_capita(country):
-    logging.debug(f"Pays demandé : {country}")
+    with open(filename_path_json, 'w') as outfile:
+        json.dump(output, outfile,sort_keys=True, indent=4, ensure_ascii=False)
     
-    if country.lower()=="albania":
-        return json.dumps({1975:4338.334, 1985:6929.926, 1995:1848.549, 2005:3825.184, 2015:3824.801, 2016:3674.183, 2017:4342.011})
-    else:
-        #erreur 404 si on demande un pays qui n'est pas connu
-        abort(404)
+def get_latest_by_country(countryName, jsonFile='estimates.json'):
+    years, emissions = list(), str()
 
-if __name__=="__main__":
-    app.run(debug=True)
+    with open(jsonFile, 'r') as f:
+        info_dict = json.load(f)
+        for info in info_dict:
+            if info["Region/Country/Area"].lower() == countryName.lower() and 'thousand' in info['Series']:
+                years.append(info['Year'])
+                emissions = info['Value']
+    try:
+        return json.dumps({"country": countryName, "year": max(years), "emissions": emissions})
+    except:
+        return None
+
+# @app.route('/per_capita/<country>')
+def per_capita(jsonFile, country):
+# Fonction qui permet de renvoyé l'émission par habitant d'un pays sur plusieurs années
+    dic = {}
+    years = []
+    emissions = list()
+    # on créé une liste dict pour les émissions, et une liste pour les années
+    with open(jsonFile, 'r') as f:
+        # on lit le fichier json
+        info_dict = json.load(f)
+        # on le charge 
+        for info in info_dict:
+            if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
+                # si il trouve le pays et que per capita se trouve dans la colonne series
+                years.append(info["Year"])
+                # on ajoute l'année à la liste years
+                emissions.append(float(info["Value"]))
+                # on ajoute l'émission à la liste emissions
+
+
+
+    for cpt, i in enumerate(years):
+        dic[i] = emissions[cpt]
+        # permet de renvoyer la valeur de l'année et l'émission pour chaque années, dans le dic
+
+        
+    return dic
+
+    # try:
+    #     return json.dumps({})
+    # except:
+    #     return None
+
+# def return_string(this_is_a_string):
+#     return this_is_a_string
+
+# def return_is_string(this_is_a_string):
+#     return isinstance(this_is_a_string, str)
+
+create_json()
+x = per_capita("estimates.json", "Albania")
+
+print(x)
