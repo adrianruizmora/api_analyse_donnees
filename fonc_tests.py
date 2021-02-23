@@ -3,8 +3,22 @@ import fonctions as f
 import test_values as tv
 
 class TestCreateJson(unittest.TestCase):
-    pass
-    
+
+    def test_filename(self):
+        self.assertEqual(f.create_json(""), 1)
+        self.assertEqual(f.create_json("",""), 1)
+        self.assertEqual(f.create_json("foo"), 1)
+        self.assertEqual(f.create_json("/"), 1)
+        self.assertEqual(f.create_json(123), 1)
+        self.assertEqual(f.create_json(123.1), 1)
+        self.assertEqual(f.create_json('estimates.json'),1)
+        self.assertEqual(f.create_json('estimates.csv','estimates'), 1)
+        self.assertEqual(f.create_json('estimates.csv','estimates.csv'), 1)
+        self.assertEqual(f.create_json('estimates.csv','estimates.txt'), 1)
+        self.assertEqual(f.create_json('estimates.csv','estimates.json'), 0)
+        self.assertEqual(f.create_json('estimates.csv'), 0)
+        self.assertEqual(f.create_json(), 0)
+        
 
 class TestGetLatestByCountry(unittest.TestCase):
 
@@ -12,34 +26,19 @@ class TestGetLatestByCountry(unittest.TestCase):
         self.assertIsNone(f.get_latest_by_country('foo'))
         self.assertIsNone(f.get_latest_by_country('123'))
         self.assertIsNone(f.get_latest_by_country(456))
+        self.assertIsNone(f.get_latest_by_country(456.1))
         self.assertIsNone(f.get_latest_by_country(''))
         self.assertIsNone(f.get_latest_by_country('.'))
         self.assertIsNone(f.get_latest_by_country('/'))
-        self.assertIsNotNone(f.get_latest_by_country('Albania'))
-        self.assertIsNotNone(f.get_latest_by_country('Japan'))
-        self.assertIsNotNone(f.get_latest_by_country('Kazakhstan'))
+        self.assertIsNone(f.get_latest_by_country('Albania', 'estimates.csv'))
+        self.assertIsNone(f.get_latest_by_country('estimates.csv', 'Albania'))
+        self.assertIsNotNone(f.get_latest_by_country('Albania', 'estimates.json'))
     
     def test_country(self):
         info = tv.info_latest_by_country()
         info_keys = list(info.keys())
-        info_values = list(info.values())
         for i in range(len(info)):
-            self.assertEqual(f.get_latest_by_country(info_keys[i]), info_values[i])
-
-    def test_upper(self):
-        info = tv.info_latest_by_country()
-        info_keys = list(info.keys())
-        info_values = list(info.values())
-        for i in range(len(info)):
-            self.assertEqual(f.get_latest_by_country(info_keys[i].upper()), info_values[i])
-
-    def test_lower(self):
-        info = tv.info_latest_by_country()
-        info_keys = list(info.keys())
-        info_values = list(info.values())
-        for i in range(len(info)):
-            self.assertEqual(f.get_latest_by_country(info_keys[i].lower()), info_values[i])
-    
-
+            self.assertIsNotNone(f.get_latest_by_country(info_keys[i]))
+ 
 if __name__ == '__main__':
     unittest.main()
