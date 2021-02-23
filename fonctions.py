@@ -2,10 +2,8 @@ import csv
 import json
 
 
-def create_json(filenameCsv):
-    filename_path_csv = filenameCsv
-    filename_path_json = 'estimates.json'
-    output = []
+def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates.json'):
+    output = list()
 
     with open(filename_path_csv, 'r') as f:
         next(f, None)
@@ -18,9 +16,9 @@ def create_json(filenameCsv):
     with open(filename_path_json, 'w') as outfile:
         json.dump(output, outfile,sort_keys=True, indent=4, ensure_ascii=False)
     
-def get_latest_by_country(jsonFile, countryName):
-    years = []
-    emissions = str()
+def get_latest_by_country(countryName, jsonFile='estimates.json'):
+    years, emissions = list(), str()
+
     with open(jsonFile, 'r') as f:
         info_dict = json.load(f)
         for info in info_dict:
@@ -31,5 +29,11 @@ def get_latest_by_country(jsonFile, countryName):
         return json.dumps({"country": countryName, "year": max(years), "emissions": emissions})
     except:
         return None
-        
 
+
+
+# def return_string(this_is_a_string):
+#     return this_is_a_string
+
+# def return_is_string(this_is_a_string):
+#     return isinstance(this_is_a_string, str)
