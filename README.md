@@ -32,7 +32,7 @@ Correction des tables:
 - Si 'thousand' se trouve dans la colonne Series de ces lignes, on l'ajoute à notre liste 
 - Il renvoie les valeurs dans la sortie 
 
-- 
+
 
 
 
