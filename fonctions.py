@@ -85,6 +85,5 @@ def get_per_capita(jsonFile, country):
     for cpt, i in enumerate(years):
         dic[i] = emissions[cpt]
     logging.debug("Recherche de toutes les années d'émission par habitant du pays")
-
     
     return dic 
