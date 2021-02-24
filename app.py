@@ -39,11 +39,10 @@ def average_for_year(year):
 @app.route('/per_capita/<country>')
 def per_capita(country):
     logging.debug(f"Pays demandé : {country}")
-    
-    if country.lower()=="albania":
-        return json.dumps({1975:4338.334, 1985:6929.926, 1995:1848.549, 2005:3825.184, 2015:3824.801, 2016:3674.183, 2017:4342.011})
+    result = f.get_per_capita("estimates.json",country)
+    if result != 1:
+        return json.dumps(result)
     else:
-        #erreur 404 si on demande un pays qui n'est pas connu
         abort(404)
 
 if __name__=="__main__":
