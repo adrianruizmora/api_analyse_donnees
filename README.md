@@ -4,14 +4,15 @@ Auteurs : Adrian, Djan, Yoan
 
 Technologies : Python, flask, postman, Json
 
-Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprendra quatre fonctions 
-principales avec la possibilité de telecharger les données en fichier json ou csv.
+Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprendra quantre script:
+- le fichier fonction_app qui comprendra quatre fonctions principales :
 
 Le programme sera testé en amont avec Flask et l'API Postman avant d'être déployé en réseau local.
 
 1] Fonction qui permet de créé le fichier json à partir du csv:
 
 Correction des tables:
+- Changement manuel du nom du fichier csv 
 - remplacement de la colonne " Region/Country/Area " par " id ", et de la colonne "(vide)" par Region/Country/Area 
 - rangement des tables pour qu'elles soient ordonnée, et en mesure de traité les accents
 
