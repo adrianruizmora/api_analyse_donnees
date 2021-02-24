@@ -81,16 +81,27 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
     except:
         logging.debug("Opération réussi")
         return None
-      
+
+    
+""" The function calculates the sum of the CO2 consumption of all countries 
+and divides it by the number of countries to obtain a world average """ 
 
 def average_for_year(year):
     emissions = []
+    logging.debug("Appel de la fonction average_for_year")
     with open("estimates.json", 'r') as f:
+
         info_dict = json.load(f)
+        logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
-            if info["Year"].lower() == year.lower() and 'thousand' in info['Series']:  
+            if info["Year"].lower() == year.lower() and 'thousand' in info['Series']: 
                 emissions.append(float(info['Value']))
-    
+
+    logging.debug("Recherche de l'entrée dans la colonne year et son émission total")
+    logging.debug("ajout de la valeur de l'émission à la liste")
+    logging.debug("Calcul de la moyenne des émissions mondiale de Co2")
+    logging.debug("Opération réussi")
+
     return sum(emissions)/len(emissions)
   
 
