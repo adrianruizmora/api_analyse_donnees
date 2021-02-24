@@ -1,6 +1,7 @@
 import csv
 import json
 import os
+import logging
 
 def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates.json'):
     output = list()
@@ -60,3 +61,29 @@ def average_for_year(year):
                 emissions.append(float(info['Value']))
     
     return sum(emissions)/len(emissions)
+
+""" Function that allows to return the Co2 
+emission per person of one over all years """
+
+def get_per_capita(jsonFile, country):
+
+    dic = {}
+    years = []
+    emissions = list()
+    
+    logging.debug("Appel de la fonction per_capita")
+    with open(jsonFile, 'r') as f:
+        info_dict = json.load(f)    
+        logging.debug("Ouverture et lecture du fichier json")    
+        for info in info_dict:
+            if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
+                years.append(info["Year"])
+                emissions.append(float(info["Value"]))
+        logging.debug("Recherche de l'entrée dans la colonne Region/Country/Area et son émission par habitant")
+        logging.debug("Ajout de l'année et de l'émission par habitant à la liste")
+        
+    for cpt, i in enumerate(years):
+        dic[i] = emissions[cpt]
+    logging.debug("Recherche de toutes les années d'émission par habitant du pays")
+    
+    return dic 
