@@ -49,3 +49,14 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
         return json.dumps({"country": country_name.lower(), "year": max(years), "emissions": emissions})
     except:
         return None
+
+
+def average_for_year(year):
+    emissions = []
+    with open("estimates.json", 'r') as f:
+        info_dict = json.load(f)
+        for info in info_dict:
+            if info["Year"].lower() == year.lower() and 'thousand' in info['Series']:  
+                emissions.append(float(info['Value']))
+    
+    return sum(emissions)/len(emissions)
