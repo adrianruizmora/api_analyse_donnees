@@ -60,5 +60,3 @@ def average_for_year(year):
                 emissions.append(float(info['Value']))
     
     return sum(emissions)/len(emissions)
-    
-

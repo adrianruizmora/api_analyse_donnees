@@ -50,7 +50,10 @@ class TestAverageForYear(unittest.TestCase):
         self.assertIsInstance(f.average_for_year(2017), float)
         self.assertIsInstance(f.average_for_year('2017'), float)
         self.assertIsInstance(f.average_for_year('2024'), float)
-
+        info = tv.info_latest_by_country()
+        info_keys = list(info.keys())
+        for i in range(len(info)):
+            self.assertIsNotNone(f.get_latest_by_country(info_keys[i]))
 
 if __name__ == '__main__':
     unittest.main()
