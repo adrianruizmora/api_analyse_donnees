@@ -1,6 +1,6 @@
 import unittest
 import fonctions as f
-import test_values as tv
+import values as v
 
 
 class TestCreateJson(unittest.TestCase):
@@ -37,23 +37,36 @@ class TestGetLatestByCountry(unittest.TestCase):
         self.assertIsNotNone(f.get_latest_by_country('Albania', 'estimates.json'))
     
     def test_country(self):
-        countries = tv.countries()
-        for country in range(len(countries)):
-            self.assertIsNotNone(f.get_latest_by_country(countries[country]))
+        countries = v.countries
+        values = v.values
+        for i in range(len(countries)):
+            self.assertEqual(f.get_latest_by_country(countries[i]), values[i])
 
 
 class TestAverageForYear(unittest.TestCase):
     
     def test_year(self):
-        self.assertIsInstance(f.average_for_year(''),float)
-        self.assertIsInstance(f.average_for_year('_'),float)
-        self.assertIsInstance(f.average_for_year(2017), float)
+        self.assertIsInstance(f.average_for_year(''),1)
+        self.assertIsInstance(f.average_for_year('_'),1)
+        self.assertIsInstance(f.average_for_year(2017), 1)
         self.assertIsInstance(f.average_for_year('2017'), float)
-        self.assertIsInstance(f.average_for_year('2024'), float)
-        info = tv.info_latest_by_country()
-        info_keys = list(info.keys())
-        for i in range(len(info)):
-            self.assertIsNotNone(f.get_latest_by_country(info_keys[i]))
+        self.assertIsInstance(f.average_for_year('2024'), 1)
+
+
+class TestPerCapita(unittest.TestCase):
+
+    def test_return_type(self):
+        self.assertEqual(f.per_capita('', 'France'), 1)
+        self.assertEqual(f.per_capita('/', 'France'), 1)
+        self.assertEqual(f.per_capita('.', 'France'), 1)
+        self.assertEqual(f.per_capita('_', 'France'), 1)
+        self.assertEqual(f.per_capita('2015', 'France'), 1)
+        self.assertEqual(f.per_capita(2015, 'France'), 1)
+        self.assertEqual(f.per_capita('2017', 'foo'), 1)
+        self.assertEqual(f.per_capita('2017', 2015), 1)
+        self.assertEqual(f.per_capita('2017', '2015'), 1)
+        self.assertIsInstance(f.per_capita('estimates.json', 'France'), dict)
+        
 
 if __name__ == '__main__':
     unittest.main()
