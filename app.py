@@ -38,7 +38,7 @@ def by_country(country):
 
     '{"country": "albania", "year": "2017", "emissions": "4342.011"}',  
 
-"""
+    """
     #on veut la valeur la plus récente des emissions totales pour le pays demandé
     logging.debug(f"Pays demandé : {country}")
     result = f.get_latest_by_country(country)
@@ -71,7 +71,7 @@ def average_for_year(year):
     http://127.0.0.1:5000/average_by_year/2017
     {"year": "2017", "total": 219666.44571830987}
 
-"""
+    """
     #on cherche la moyenne des émissions totales au niveau mondial pour une année demandée
     logging.debug(f"Année demandée : {year}")
     resultat = f.average_for_year(year)
