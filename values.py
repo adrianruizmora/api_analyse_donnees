@@ -1,17 +1,21 @@
-import json
-import fonctions as f
+countries = [
+        'Albania','France','Japan',
+        'Algeria', 'Angola', 'United Arab Emirates',
+        'Turkmenistan','North Macedonia', 'Syrian Arab Republic',
+        'Venezuela (Boliv. Rep. of)', 'Yemen', 'Zambia'
+        ]
 
-def info_latest_by_country():
-    countries = list()
-    countries_info = dict()
-
-    with open('estimates.json') as json_file:
-        info_dict = json.load(json_file)
-        for info in info_dict:
-            countries.append(info[ "Region/Country/Area"])
-            
-    countries = list(dict.fromkeys(countries))
-    for country in range(len(countries)):
-            countries_info[countries[country]] = f.get_latest_by_country(countries[country])
-    
-    return countries_info
+values = [
+    '{"country": "albania", "year": "2017", "emissions": "4342.011"}', 
+    '{"country": "france", "year": "2017", "emissions": "306123.541"}',
+    '{"country": "japan", "year": "2017", "emissions": "1132435.4"}',
+    '{"country": "algeria", "year": "2017", "emissions": "130493.653"}',
+    '{"country": "angola", "year": "2017", "emissions": "18021.394"}',
+    '{"country": "united arab emirates", "year": "2017", "emissions": "196510.174"}',
+    '{"country": "turkmenistan", "year": "2017", "emissions": "68998.881"}',
+    '{"country": "north macedonia", "year": "2017", "emissions": "7440.699"}',
+    '{"country": "syrian arab republic", "year": "2017", "emissions": "23031.045"}',
+    '{"country": "venezuela (boliv. rep. of)", "year": "2017", "emissions": "113717.543"}',
+    '{"country": "yemen", "year": "2017", "emissions": "8919.998"}',
+    '{"country": "zambia", "year": "2017", "emissions": "6007.872"}'
+    ]
