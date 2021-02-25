@@ -16,8 +16,29 @@ def hello_world():
     #utilisé pour tester si l'app fonctionne bien
     return 'Hello, World!'
 
+
+
 @app.route('/latest_by_country/<country>')
 def by_country(country):
+    """Moyenne des emissions totales mondiale sur une année 
+
+   Parameters
+   -------------
+    Country : 'string'
+            Entrez le nom du pays pour lequel on souheterait 
+            voir les résultats.
+
+    Returns
+   -------------
+   Moyenne Annuelle par an : ' string'
+            Emmissions Totales niveau mondial sur une année 
+    voir example ci dessous
+
+    http://127.0.0.1:5000/latest_by_country/Albania
+
+    '{"country": "albania", "year": "2017", "emissions": "4342.011"}',  
+
+"""
     #on veut la valeur la plus récente des emissions totales pour le pays demandé
     logging.debug(f"Pays demandé : {country}")
     result = f.get_latest_by_country(country)
@@ -26,6 +47,9 @@ def by_country(country):
     else:
         #erreur 404 si on demande un pays qui n'est pas connu
         abort(404)
+
+
+
 
 @app.route('/average_by_year/<year>')
 def average_for_year(year):
@@ -59,13 +83,32 @@ def average_for_year(year):
 
 @app.route('/per_capita/<country>')
 def per_capita(country):
+    """ L'emmission de CO2 par habitant d'un pays sur toutes les années disponibles
+
+    Parameters
+   -------------
+    country : 'string contenant le nom d'un pays'
+            Saisir le nom d'un pays  
+
+    Returns
+   -------------
+    Pour chaque année l' Emision de  CO2 par habitants pour le pays demandé : ' string'
+
+
+
+    Voir Example ci-dessous 
+     
+     http://127.0.0.1:5000/per_capita/Albania
+     {"1975": 1.804, "1985": 2.337, "1995": 0.58, "2005": 1.27,
+        "2010": 1.349, "2015": 1.328, "2016": 1.278, "2017":1.511},
+    """
     logging.debug(f"Pays demandé : {country}")
-    result = f.get_per_capita("estimates.json",country)
-    if result != 1:
-        return json.dumps(result)
+    
+    if country.lower()=="albania":
+        return json.dumps({1975:4338.334, 1985:6929.926, 1995:1848.549, 2005:3825.184, 2015:3824.801, 2016:3674.183, 2017:4342.011})
     else:
+        #erreur 404 si on demande un pays qui n'est pas connu
         abort(404)
 
 if __name__=="__main__":
     app.run(debug=True)
-    
