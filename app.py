@@ -31,8 +31,10 @@ def by_country(country):
 def average_for_year(year):
     #on cherche la moyenne des émissions totales au niveau mondial pour une année demandée
     logging.debug(f"Année demandée : {year}")
-    if year=="1975":
-        return json.dumps({"year":"1975", "total":12333555.9})
+    resultat = f.average_for_year(year)
+
+    if resultat != 1:
+        return json.dumps({"year": year, "total":resultat})
     else:
         abort(404)
 
