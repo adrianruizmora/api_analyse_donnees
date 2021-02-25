@@ -52,21 +52,6 @@ class TestAverageForYear(unittest.TestCase):
         self.assertIsInstance(f.average_for_year('2017'), float)
         self.assertIsInstance(f.average_for_year('2024'), 1)
 
-
-class TestPerCapita(unittest.TestCase):
-
-    def test_return_type(self):
-        self.assertEqual(f.per_capita('', 'France'), 1)
-        self.assertEqual(f.per_capita('/', 'France'), 1)
-        self.assertEqual(f.per_capita('.', 'France'), 1)
-        self.assertEqual(f.per_capita('_', 'France'), 1)
-        self.assertEqual(f.per_capita('2015', 'France'), 1)
-        self.assertEqual(f.per_capita(2015, 'France'), 1)
-        self.assertEqual(f.per_capita('2017', 'foo'), 1)
-        self.assertEqual(f.per_capita('2017', 2015), 1)
-        self.assertEqual(f.per_capita('2017', '2015'), 1)
-        self.assertIsInstance(f.per_capita('estimates.json', 'France'), dict)
         
-
 if __name__ == '__main__':
     unittest.main()
