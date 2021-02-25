@@ -29,6 +29,25 @@ def by_country(country):
 
 @app.route('/average_by_year/<year>')
 def average_for_year(year):
+    """ Moyenne des emissions totales mondialles sur une année 
+
+   Parameters
+   -------------
+    year : 'string contenant une valeur numérique'
+            Entrez l'année pour laquelle on souheterait 
+            voir les résultats.
+
+    Returns
+   -------------
+   Moyenne Annuelle par an : ' string'
+            Emmissions Totales niveau mondial sur une année 
+    
+    
+    voir example ci dessous
+    http://127.0.0.1:5000/average_by_year/2017
+    {"year": "2017", "total": 219666.44571830987}
+
+"""
     #on cherche la moyenne des émissions totales au niveau mondial pour une année demandée
     logging.debug(f"Année demandée : {year}")
     resultat = f.average_for_year(year)
