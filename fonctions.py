@@ -99,7 +99,6 @@ def average_for_year(year):
     logging.debug("Recherche de l'entrée dans la colonne year et son émission total")
     logging.debug("ajout de la valeur de l'émission à la liste")
     logging.debug("Calcul de la moyenne des émissions mondiale de Co2")
-    logging.debug("Opération réussi")
 
     return sum(emissions)/len(emissions)
 
@@ -129,8 +128,7 @@ def get_per_capita(jsonFile, country):
 
     for cpt, i in enumerate(years):
         dic[i] = emissions[cpt]
-    
-    
+        
     return dic 
        
 
