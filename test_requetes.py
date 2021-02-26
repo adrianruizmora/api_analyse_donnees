@@ -1,0 +1,36 @@
+import unittest
+from app import app
+
+
+class TestApi(unittest.TestCase):
+
+    def setUp(self):
+        self.app = app.test_client()
+
+    def test_hello_world(self):
+        rv = self.app.get('/')
+        assert rv.status == '200 OK'
+        error = self.app.get('/foo')
+        self.assertEqual(error.status, '404 NOT FOUND')
+
+    def test_by_country(self):
+        rv = self.app.get('/latest_by_country/France')
+        assert rv.status == '200 OK'
+        error = self.app.get('/latest_by_country/foo')
+        self.assertEqual(error.status, '404 NOT FOUND')
+
+    def test_average_for_year(self):
+        rv = self.app.get('/average_by_year/1975')
+        assert rv.status == '200 OK'
+        error = self.app.get('/average_by_year/foo')
+        self.assertEqual(error.status, '404 NOT FOUND')
+
+    def test_per_capita(self):
+        rv = self.app.get('/per_capita/Albania')
+        assert rv.status == '200 OK'
+        error = self.app.get('/per_capita/foo')
+        self.assertEqual(error.status, '404 NOT FOUND')
+
+
+if __name__ == '__main__':
+    unittest.main()
