@@ -4,9 +4,9 @@ Auteurs : Adrian, Djan, Yoan
 
 Technologies : Python, flask, postman, Json
 
-Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprendra quantre script:
+Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprendra quatre script:
 
-1] le fichier "Fonction" qui comprendra quatre fonctions principales :
+1] le fichier "fonctions" qui comprendra quatre fonctions principales :
 
   Le programme sera testé en amont avec Flask et l'API Postman avant d'être déployé en réseau local.
 
