@@ -36,9 +36,9 @@ Ce programme permet d'interagir avec les données de l'ONU sur les émissions de
 
 2] Le fichier "app.py" qui les trois requêtes http, avec l'appel des fonctions depuis le fichier "Fonction.py":
 
-1.(by_country) : L'utilisateur doit entrr un pays, le programme renvoie la dernière émission renregistrée
-2.(average_for_year) : L'utilisateur doit entrer une année, le programme renvoie la moyenne mondiale d'émission de cette année
-3.(per_capita) : L'utilisateur doit entrer un pays, le programme renvoie les émissions par habitant de toutes les années
+1.by_country : L'utilisateur doit entrr un pays, le programme renvoie la dernière émission renregistrée
+2.average_for_year : L'utilisateur doit entrer une année, le programme renvoie la moyenne mondiale d'émission de cette année
+3.per_capita : L'utilisateur doit entrer un pays, le programme renvoie les émissions par habitant de toutes les années
 
 
 
