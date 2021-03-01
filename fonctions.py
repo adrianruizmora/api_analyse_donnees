@@ -124,14 +124,18 @@ def get_per_capita(country, jsonFile="estimates.json"):
     emissions = list()
     logging.debug("Appel de la fonction per_capita")
 
-
-    if not jsonFile.endswith('.json'):
-        logging.debug("Test de format du fichier json")
+    if isinstance(jsonFile, str):
+        if not jsonFile.endswith('.json'):
+            logging.debug("Test de format du fichier json")
+            return False
+    try:
+        f = open(jsonFile, "r")
+    except:
         return False
-
-    with open(jsonFile, 'r') as f:
+    with f:
         info_dict = json.load(f)    
         logging.debug("Ouverture et lecture du fichier json")    
+    
         for info in info_dict:
             try:
                 if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
