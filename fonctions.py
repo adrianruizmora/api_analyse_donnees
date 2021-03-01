@@ -37,16 +37,16 @@ def create_json(filename_path_csv='estimates.csv',
         for records in reader:
             records["id"] = records.pop("Region/Country/Area")
             records["Region/Country/Area"] = records.pop("")
-            output.append(records)
-
+            output.append(records)   
         logging.debug("remplacement de la colonne Region/Country/Area par id")
         logging.debug("replacing empty column by Region/Country/Area")
 
+
     with open(filename_path_json, 'w') as outfile:
+        logging.debug("ouverture et écriture du fichier json")
         json.dump(output, outfile, sort_keys=True, indent=4,
                   ensure_ascii=False)
 
-        logging.debug("ouverture et écriture du fichier json")
         logging.debug("""ordonne la table, prise en compte de caractères
         spéciaux""")
         logging.debug("telechargement et modification du fichier json réussi")
@@ -78,11 +78,11 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
             if (info["Region/Country/Area"].lower() == country_name.lower() and
                     'thousand' in info['Series']):
                 years.append(info['Year'])
+                logging.debug("ajout de l'année et de l'émission total")
                 emissions = round(float(info['Value']), 3)
                 emissions = str(emissions)
 
-        logging.debug("ajout de l'année et de l'émission total dans la liste")
-        logging.debug("Searching country and total emissions")
+    logging.debug("Searching country and total emissions")
 
     try:
         logging.debug("Displays the list that contains fucntion result")
@@ -102,13 +102,13 @@ def average_for_year(year):
 
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
+        logging.debug("Searching in year column and the total emissions")
         for info in info_dict:
             if (info["Year"] == year and
                     'thousand' in info['Series']):
+                logging.debug("ajout de la valeur de l'émission à la liste")
                 emissions.append(float(info['Value']))
 
-    logging.debug("Searching in year column and the total emissions")
-    logging.debug("ajout de la valeur de l'émission à la liste")
     logging.debug("Calcul de la moyenne des émissions mondiale de Co2")
     try:
         return sum(emissions)/len(emissions)
@@ -137,14 +137,15 @@ def get_per_capita(country, jsonFile="estimates.json"):
     with f:
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
+        logging.debug("Searching for emisions by habitant ")
         for info in info_dict:
             if (info["Region/Country/Area"].lower() == country.lower() and
                     'per capita' in info['Series']):
+                logging.debug("Adding year and emissions by habitants")
                 years.append(info["Year"])
                 emissions.append(float(info["Value"]))
-        logging.debug("Searching for emisions by habitant ")
-        logging.debug("Adding year and emissions by habitants")
-        logging.debug("Emissions of all years by habitants")
+
+    logging.debug("Emissions of all years by habitants")
 
     for cpt, i in enumerate(years):
         dic[i] = emissions[cpt]
