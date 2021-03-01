@@ -4,25 +4,29 @@ import values as v
 
 
 class TestCreateJson(unittest.TestCase):
+    # Cette méthode nous permet de tester differents
+    # arguments pour les paramètres de notre fonction
 
     def test_parametres(self):
         self.assertEqual(f.create_json(""), 1)
-        self.assertEqual(f.create_json("",""), 1)
+        self.assertEqual(f.create_json("", ""), 1)
         self.assertEqual(f.create_json("foo"), 1)
         self.assertEqual(f.create_json("/"), 1)
         self.assertEqual(f.create_json(123), 1)
         self.assertEqual(f.create_json(123.1), 1)
-        self.assertEqual(f.create_json('estimates.json'),1)
+        self.assertEqual(f.create_json('estimates.json'), 1)
         self.assertEqual(f.create_json('estimates.csv', '/'), 1)
-        self.assertEqual(f.create_json('estimates.csv','estimates'), 1)
-        self.assertEqual(f.create_json('estimates.csv','estimates.csv'), 1)
-        self.assertEqual(f.create_json('estimates.csv','estimates.txt'), 1)
-        self.assertEqual(f.create_json('estimates.csv','estimates.json'), 0)
+        self.assertEqual(f.create_json('estimates.csv', 'estimates'), 1)
+        self.assertEqual(f.create_json('estimates.csv', 'estimates.csv'), 1)
+        self.assertEqual(f.create_json('estimates.csv', 'estimates.txt'), 1)
+        self.assertEqual(f.create_json('estimates.csv', 'estimates.json'), 0)
         self.assertEqual(f.create_json('estimates.csv'), 0)
         self.assertEqual(f.create_json(), 0)
-        
+
 
 class TestGetLatestByCountry(unittest.TestCase):
+    # Cette méthode nous permet de tester differents
+    # arguments pour les paramètres de notre fonction
 
     def test_parametres(self):
         self.assertIsNone(f.get_latest_by_country('foo'))
@@ -34,8 +38,13 @@ class TestGetLatestByCountry(unittest.TestCase):
         self.assertIsNone(f.get_latest_by_country('/'))
         self.assertIsNone(f.get_latest_by_country('Albania', 'estimates.csv'))
         self.assertIsNone(f.get_latest_by_country('estimates.csv', 'Albania'))
-        self.assertIsNotNone(f.get_latest_by_country('Albania', 'estimates.json'))
-    
+        self.assertIsNotNone(f.get_latest_by_country('Albania',
+                                                     'estimates.json'))
+
+    # Cette méthode nous permet de tester les
+    # valuer de retour attendus en fonction des arguments
+    # passés en paramètre de la fonction
+
     def test_return_value(self):
         countries = v.countries
         values = v.values_latest
@@ -44,7 +53,9 @@ class TestGetLatestByCountry(unittest.TestCase):
 
 
 class TestAverageForYear(unittest.TestCase):
-    
+    # Cette méthode nous permet de tester differents
+    # arguments pour les paramètres de notre fonction
+
     def test_parametres(self):
         self.assertIsInstance(f.average_for_year(''), int)
         self.assertIsInstance(f.average_for_year('_'), int)
@@ -52,13 +63,20 @@ class TestAverageForYear(unittest.TestCase):
         self.assertIsInstance(f.average_for_year('2017'), float)
         self.assertIsInstance(f.average_for_year('2024'), int)
 
+    # Cette méthode nous permet de tester les
+    # valuer de retour attendus en fonction des arguments
+    # passés en paramètre de la fonction
+
     def test_return_value(self):
         years = v.years
         values = v.values_years
         for i in range(len(years)):
             self.assertEqual(f.average_for_year(years[i]), values[i])
 
+
 class TestPerCapita(unittest.TestCase):
+    # Cette méthode nous permet de tester differents
+    # arguments pour les paramètres de notre fonction
 
     def test_parametres(self):
         self.assertEqual(f.get_per_capita('France', ''), False)
@@ -70,14 +88,19 @@ class TestPerCapita(unittest.TestCase):
         self.assertEqual(f.get_per_capita('foo', '2017'), False)
         self.assertEqual(f.get_per_capita(2015, '2017'), False)
         self.assertEqual(f.get_per_capita('2015', '2017'), False)
-        self.assertIsInstance(f.get_per_capita('France', 'estimates.json'), dict)
+        self.assertIsInstance(f.get_per_capita('France',
+                                               'estimates.json'), dict)
+
+    # Cette méthode nous permet de tester les
+    # valuer de retour attendus en fonction des arguments
+    # passés en paramètre de la fonction
 
     def test_return_value(self):
         countries = v.countries
         values = v.values_capita
         for i in range(len(countries)):
             self.assertEqual(f.get_per_capita(countries[i]), values[i])
-        
+
 
 if __name__ == '__main__':
     unittest.main()
