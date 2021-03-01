@@ -14,7 +14,8 @@ https://data.un.org/_Docs/SYB/CSV/SYB63_310_202009_Carbon%20Dioxide%20Emission%2
 
 @app.route('/')
 def hello_world():
-    'utilisé pour tester si app fonctionne bien'
+    """utilisé pour tester si app fonctionne bien"""
+
     return 'Hello, World!'
 
 
@@ -36,9 +37,10 @@ def by_country(country):
     """
     '''on veut la valeur la plus récente des emissions totales
      pour le pays demandé'''
+
     logging.debug(f"Pays demandé : {country}")
     result = f.get_latest_by_country(country)
-    if result != None:
+    if result is not None:
         return result
     else:
         'erreur 404 if country is unkwown'
@@ -63,6 +65,7 @@ def average_for_year(year):
     """
     '''on cherche la moyenne des émissions totales au niveau mondial
      pour une année demandée'''
+
     logging.debug(f"Année demandée : {year}")
     resultat = f.average_for_year(year)
 
@@ -87,8 +90,9 @@ def per_capita(country):
      {"1975": 1.804, "1985": 2.337, "1995": 0.58, "2005": 1.27,
         "2010": 1.349, "2015": 1.328, "2016": 1.278, "2017":1.511},
     """
-    """ Function that allows to return Co2 
+    """ Function that allows to return Co2
     emission per person of one over all years """
+
     result = f.get_per_capita(country)
     if isinstance(result, dict):
         return result
