@@ -47,6 +47,8 @@ Ce programme permet d'interagir avec les données de l'ONU sur les émissions de
 
 6] le fichier "autotests.exe" sert à automatiser tous les tests des deux scripts précédent.
 
+* Nous utiliserons git-Hooks pour automatiser les tests avant le push
+
 
 
 
