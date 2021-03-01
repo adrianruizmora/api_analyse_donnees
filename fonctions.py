@@ -6,18 +6,20 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
-""" function that allows to create the json file from the csv. Correction of the tables: 
-replacement of the column (RegionCountryArea) by (id), and of the column "(empty)" by (RegionCountryArea) 
-arranging of the tables so that they are ordered, and able to handle the accents."""
 
 def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates.json'):
+    """
+     function that allows to create the json file from the csv. Correction of the tables: 
+    replacement of the column (RegionCountryArea) by (id), and of the column "(empty)" by (RegionCountryArea) 
+    arranging of the tables so that they are ordered, and able to handle the accents.
+    """
 
     output = list()
     logging.info("lancement de la fonction create_json")     
     if not isinstance(filename_path_csv, str) or os.path.isdir(filename_path_csv):
         logging.debug("test du type des paramètre de la fonction ")
         return 1
-    if not filename_path_csv.endswith('.csv') or not filename_path_json.endswith('json'):
+    if not filename_path_csv.endswith('.csv') or not filename_path_json.endswith('.json'):
         logging.debug("Test du format des parametres")
         return 1
     try:
@@ -51,6 +53,10 @@ def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates
 
     
 def get_latest_by_country(country_name, filename_path_json='estimates.json'):
+    """ 
+    Function that allows to send back the Co2 emission of a country
+    in the last year and to send in output 
+    """
 
     logging.debug("Appel de la fonction lastest_country")
 
@@ -86,10 +92,11 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
         return None
     
 
-""" The function calculates the sum of the CO2 consumption of all countries 
-and divides it by the number of countries to obtain a world average """ 
-
 def average_for_year(year):
+    """ 
+    The function calculates the sum of the CO2 consumption of all countries 
+    and divides it by the number of countries to obtain a world average 
+    """ 
     emissions = []
     logging.debug("Appel de la fonction average_for_year")
     with open("estimates.json", 'r') as f:
@@ -106,15 +113,21 @@ def average_for_year(year):
     return sum(emissions)/len(emissions)
   
 
-""" Function that allows to return the Co2 
-emission per person of one over all years """
-
-def get_per_capita(jsonFile, country):
+def get_per_capita(country, jsonFile="estimates.json"):
+    """ 
+    Function that allows to return the Co2 
+    emission per person of one over all years 
+    """
 
     dic = {}
     years = []
     emissions = list()
     logging.debug("Appel de la fonction per_capita")
+
+
+    if not jsonFile.endswith('.json'):
+        logging.debug("Test de format du fichier json")
+        return False
 
     with open(jsonFile, 'r') as f:
         info_dict = json.load(f)    

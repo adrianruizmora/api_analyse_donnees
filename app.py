@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 Récupérer les infos du fichier :
 https://data.un.org/_Docs/SYB/CSV/SYB63_310_202009_Carbon%20Dioxide%20Emission%20Estimates.csv
 """
-f.create_json()
+
 @app.route('/')
 def hello_world():
     #utilisé pour tester si l'app fonctionne bien
@@ -77,7 +77,7 @@ def average_for_year(year):
     resultat = f.average_for_year(year)
 
     if resultat != 1:
-        return json.dumps({"year": year, "total":resultat})
+        return json.loads(json.dumps({"year": year, "total":resultat}))
     else:
         abort(404)
 
@@ -103,31 +103,14 @@ def per_capita(country):
         "2010": 1.349, "2015": 1.328, "2016": 1.278, "2017":1.511},
     """
     """ Function that allows to return the Co2 
-emission per person of one over all years """
-
-    dic = {}
-    years = []
-    emissions = list()
-    logging.debug("Appel de la fonction per_capita")
-
-    with open(jsonFile, 'r') as f:
-        info_dict = json.load(f)    
-        logging.debug("Ouverture et lecture du fichier json")    
-        for info in info_dict:
-            try:
-                if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
-                    years.append(info["Year"])
-                    emissions.append(float(info["Value"]))
-            except:
-                return False
-        logging.debug("Recherche de l'entrée dans la colonne Region/Country/Area et son émission par habitant")
-        logging.debug("Ajout de l'année et de l'émission par habitant à la liste")
-        logging.debug("Recherche de toutes les années d'émission par habitant du pays")
-
-    for cpt, i in enumerate(years):
-        dic[i] = emissions[cpt]
-        
-    return dic 
+    emission per person of one over all years """
+    result = f.get_per_capita(country)
+    if isinstance(result, dict):
+        return result 
+    else:
+        return abort(404)
 
 if __name__=="__main__":
+    f.create_json()
     app.run(debug=True)
+    
