@@ -102,13 +102,32 @@ def per_capita(country):
      {"1975": 1.804, "1985": 2.337, "1995": 0.58, "2005": 1.27,
         "2010": 1.349, "2015": 1.328, "2016": 1.278, "2017":1.511},
     """
-    logging.debug(f"Pays demandé : {country}")
-    
-    if country.lower()=="albania":
-        return json.dumps({1975:4338.334, 1985:6929.926, 1995:1848.549, 2005:3825.184, 2015:3824.801, 2016:3674.183, 2017:4342.011})
-    else:
-        #erreur 404 si on demande un pays qui n'est pas connu
-        abort(404)
+    """ Function that allows to return the Co2 
+emission per person of one over all years """
+
+    dic = {}
+    years = []
+    emissions = list()
+    logging.debug("Appel de la fonction per_capita")
+
+    with open(jsonFile, 'r') as f:
+        info_dict = json.load(f)    
+        logging.debug("Ouverture et lecture du fichier json")    
+        for info in info_dict:
+            try:
+                if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
+                    years.append(info["Year"])
+                    emissions.append(float(info["Value"]))
+            except:
+                return False
+        logging.debug("Recherche de l'entrée dans la colonne Region/Country/Area et son émission par habitant")
+        logging.debug("Ajout de l'année et de l'émission par habitant à la liste")
+        logging.debug("Recherche de toutes les années d'émission par habitant du pays")
+
+    for cpt, i in enumerate(years):
+        dic[i] = emissions[cpt]
+        
+    return dic 
 
 if __name__=="__main__":
     app.run(debug=True)
