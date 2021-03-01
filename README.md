@@ -2,6 +2,8 @@
 
 Auteurs : Adrian, Djan, Yoan
 
+Méthode d'organisation : https://trello.com/invite/b/Fv6iFuB2/bcdaab7fed107d0bb79075ee40aaa175/conduite-de-projet
+
 Technologies : Python, flask, postman, Json
 
 Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprend six scripts :
