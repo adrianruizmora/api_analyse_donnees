@@ -79,7 +79,7 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
 
     try:
         logging.debug("tentative d'affichage de la liste dic contenant le resultat de la fonction")
-        return json.dumps({"country": country_name.lower(), "year": max(years), "emissions": emissions})
+        return json.loads(json.dumps({"country": country_name.lower(), "year": max(years), "emissions": emissions}))
     
     except:
         logging.debug("Opération réussi")
