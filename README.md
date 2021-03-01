@@ -4,7 +4,7 @@ Auteurs : Adrian, Djan, Yoan
 
 Technologies : Python, flask, postman, Json
 
-Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprendra quantre script:
+Ce programme permet d'interagir avec les données de l'ONU sur les émissions de Co2 dans le monde, il comprend six scripts:
 
 1] le fichier "fonctions" qui comprendra quatre fonctions principales :
 
@@ -41,9 +41,11 @@ Ce programme permet d'interagir avec les données de l'ONU sur les émissions de
   2.(average_for_year) : L'utilisateur doit entrer une année, le programme renvoie la moyenne mondiale d'émission de cette année
   3.(per_capita) : L'utilisateur doit entrer un pays, le programme renvoie les émissions par habitant de toutes les années
 
-3] Le script "value.py" sert à reproduire une version antérieur du fichier csv pour faire les tests unitaires
+3] Le fichier "value.py" sert à reproduire une version antérieur du fichier csv pour faire les tests unitaires
 
-4] Le script "test_fonctions.py" et "test_requetes.py" servent à tester et corriger toutes les erreurs possible.
+4],5] Le fichier "test_fonctions.py" et "test_requetes.py" servent à tester et corriger toutes les erreurs possible
+
+6] le fichier "autotests.exe" sert à automatiser tous les tests des deux scripts précédent.
 
 
 
