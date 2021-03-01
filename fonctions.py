@@ -88,9 +88,8 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
         logging.debug("Displays the list that contains fucntion result")
         return json.loads(json.dumps({"country": country_name.lower(),
                           "year": max(years), "emissions": emissions}))
-
-    except Exception:
         logging.debug("Opération réussi")
+    except Exception:
         return None
 
 
@@ -104,14 +103,17 @@ def average_for_year(year):
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
-            if (info["Year"].lower() == year.lower() and
+            if (info["Year"] == year and
                     'thousand' in info['Series']):
                 emissions.append(float(info['Value']))
 
     logging.debug("Searching in year column and the total emissions")
     logging.debug("ajout de la valeur de l'émission à la liste")
     logging.debug("Calcul de la moyenne des émissions mondiale de Co2")
-    return sum(emissions)/len(emissions)
+    try:
+        return sum(emissions)/len(emissions)
+    except ZeroDivisionError:
+        return 1
 
 
 def get_per_capita(country, jsonFile="estimates.json"):
@@ -136,17 +138,17 @@ def get_per_capita(country, jsonFile="estimates.json"):
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
-            try:
-                if (info["Region/Country/Area"].lower() == country.lower() and
-                        'per capita' in info['Series']):
-                    years.append(info["Year"])
-                    emissions.append(float(info["Value"]))
-            except Exception:
-                return False
+            if (info["Region/Country/Area"].lower() == country.lower() and
+                    'per capita' in info['Series']):
+                years.append(info["Year"])
+                emissions.append(float(info["Value"]))
         logging.debug("Searching for emisions by habitant ")
         logging.debug("Adding year and emissions by habitants")
         logging.debug("Emissions of all years by habitants")
 
     for cpt, i in enumerate(years):
         dic[i] = emissions[cpt]
-    return dic
+    if len(dic) == 0:
+        return None
+    else:
+        return dic
