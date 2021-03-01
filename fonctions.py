@@ -7,17 +7,20 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 
-def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates.json'):
+def create_json(filename_path_csv='estimates.csv',
+                filename_path_json='estimates.json'):
     """
     This functions creates an organized json file from a csv file
     """
 
     output = list()
     logging.info("lancement de la fonction create_json")
-    if not isinstance(filename_path_csv, str) or os.path.isdir(filename_path_csv):
+    if (not isinstance(filename_path_csv, str) or
+            os.path.isdir(filename_path_csv)):
         logging.debug("test du type des paramètre de la fonction ")
         return 1
-    if not filename_path_csv.endswith('.csv') or not filename_path_json.endswith('.json'):
+    if (not filename_path_csv.endswith('.csv') or
+            not filename_path_json.endswith('.json')):
         logging.debug("Test du format des parametres")
         return 1
     try:
@@ -40,10 +43,12 @@ def create_json(filename_path_csv='estimates.csv', filename_path_json='estimates
         logging.debug("replacing empty column by Region/Country/Area")
 
     with open(filename_path_json, 'w') as outfile:
-        json.dump(output, outfile, sort_keys=True, indent=4, ensure_ascii=False)
+        json.dump(output, outfile, sort_keys=True, indent=4,
+                  ensure_ascii=False)
 
         logging.debug("ouverture et écriture du fichier json")
-        logging.debug("ordonne la table, prise en compte de caractères spéciaux")
+        logging.debug("""ordonne la table, prise en compte de caractères
+        spéciaux""")
         logging.debug("telechargement et modification du fichier json réussi")
 
     return 0
@@ -62,7 +67,7 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
         return None
     try:
         country_name.lower()
-    except:
+    except AttributeError:
         return None
 
     with open(filename_path_json, 'r') as f:
@@ -70,7 +75,8 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
-            if info["Region/Country/Area"].lower() == country_name.lower() and 'thousand' in info['Series']:
+            if (info["Region/Country/Area"].lower() == country_name.lower() and
+                    'thousand' in info['Series']):
                 years.append(info['Year'])
                 emissions = round(float(info['Value']), 3)
                 emissions = str(emissions)
@@ -80,9 +86,10 @@ def get_latest_by_country(country_name, filename_path_json='estimates.json'):
 
     try:
         logging.debug("Displays the list that contains fucntion result")
-        return json.loads(json.dumps({"country": country_name.lower(), "year": max(years), "emissions": emissions}))
+        return json.loads(json.dumps({"country": country_name.lower(),
+                          "year": max(years), "emissions": emissions}))
 
-    except:
+    except Exception:
         logging.debug("Opération réussi")
         return None
 
@@ -97,7 +104,8 @@ def average_for_year(year):
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
-            if info["Year"].lower() == year.lower() and 'thousand' in info['Series']:
+            if (info["Year"].lower() == year.lower() and
+                    'thousand' in info['Series']):
                 emissions.append(float(info['Value']))
 
     logging.debug("Searching in year column and the total emissions")
@@ -122,17 +130,18 @@ def get_per_capita(country, jsonFile="estimates.json"):
             return False
     try:
         f = open(jsonFile, "r")
-    except:
+    except Exception:
         return False
     with f:
         info_dict = json.load(f)
         logging.debug("Ouverture et lecture du fichier json")
         for info in info_dict:
             try:
-                if info["Region/Country/Area"].lower() == country.lower() and 'per capita' in info['Series']:
+                if (info["Region/Country/Area"].lower() == country.lower() and
+                        'per capita' in info['Series']):
                     years.append(info["Year"])
                     emissions.append(float(info["Value"]))
-            except:
+            except Exception:
                 return False
         logging.debug("Searching for emisions by habitant ")
         logging.debug("Adding year and emissions by habitants")
