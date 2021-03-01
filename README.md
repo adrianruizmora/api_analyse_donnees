@@ -41,7 +41,7 @@ Ce programme permet d'interagir avec les données de l'ONU sur les émissions de
   2.(average_for_year) : L'utilisateur doit entrer une année, le programme renvoie la moyenne mondiale d'émission de cette année
   3.(per_capita) : L'utilisateur doit entrer un pays, le programme renvoie les émissions par habitant de toutes les années
 
-3] Le script "value.py" sert à reproduirele fichier csv pour faire les tests 
+3] Le script "value.py" sert à reproduire une version antérieur du fichier csv pour faire les tests unitaires
 
 4] Le script "test_fonctions.py" et "test_requetes.py" servent à tester et corriger toutes les erreurs possible.
 
