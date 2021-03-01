@@ -6,21 +6,21 @@ countries = [
         ]
 
 values_latest = [
-    '{"country": "albania", "year": "2017", "emissions": "4342.011"}', 
-    '{"country": "france", "year": "2017", "emissions": "306123.541"}',
-    '{"country": "japan", "year": "2017", "emissions": "1132435.4"}',
-    '{"country": "algeria", "year": "2017", "emissions": "130493.653"}',
-    '{"country": "angola", "year": "2017", "emissions": "18021.394"}',
-    '{"country": "united arab emirates", "year": "2017", "emissions": "196510.174"}',
-    '{"country": "turkmenistan", "year": "2017", "emissions": "68998.881"}',
-    '{"country": "north macedonia", "year": "2017", "emissions": "7440.699"}',
-    '{"country": "syrian arab republic", "year": "2017", "emissions": "23031.045"}',
-    '{"country": "venezuela (boliv. rep. of)", "year": "2017", "emissions": "113717.543"}',
-    '{"country": "yemen", "year": "2017", "emissions": "8919.998"}',
-    '{"country": "zambia", "year": "2017", "emissions": "6007.872"}'
+    {"country": "albania", "year": "2017", "emissions": "4342.011"}, 
+    {"country": "france", "year": "2017", "emissions": "306123.541"},
+    {"country": "japan", "year": "2017", "emissions": "1132435.4"},
+    {"country": "algeria", "year": "2017", "emissions": "130493.653"},
+    {"country": "angola", "year": "2017", "emissions": "18021.394"},
+    {"country": "united arab emirates", "year": "2017", "emissions": "196510.174"},
+    {"country": "turkmenistan", "year": "2017", "emissions": "68998.881"},
+    {"country": "north macedonia", "year": "2017", "emissions": "7440.699"},
+    {"country": "syrian arab republic", "year": "2017", "emissions": "23031.045"},
+    {"country": "venezuela (boliv. rep. of)", "year": "2017", "emissions": "113717.543"},
+    {"country": "yemen", "year": "2017", "emissions": "8919.998"},
+    {"country": "zambia", "year": "2017", "emissions": "6007.872"}
     ]
 
-years = [str(year) for year in range(1975, 2087)]
+years = [str(year) for year in range(1975, 1987)]
 
 values_years = [
         111113.1162072072, 1, 1, 1, 1,
